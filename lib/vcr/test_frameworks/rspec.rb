@@ -35,7 +35,11 @@ module VCR
             cassette = VCR.eject_cassette(:skip_no_unused_interactions_assertion => !!example.exception)
             if example.instance_variable_get(:@exception).nil?
               begin
-                File.delete cassette.name
+
+                persister = cassette.instance_variable_get('@persister')
+                cassette_path = persister.sanitized_file_name_from File.join(persister.storage_location, cassette.name)
+                puts cassette_path
+                File.delete cassette_path
               rescue
               end
             end
