@@ -43,12 +43,6 @@ module VCR
           File.join(storage_location, sanitized_file_name_from(file_name))
         end
 
-      private
-
-        def absolute_path_for(path)
-          Dir.chdir(path) { Dir.pwd }
-        end
-
         def sanitized_file_name_from(file_name)
           parts = file_name.to_s.split('.')
 
@@ -58,6 +52,14 @@ module VCR
 
           parts.join('.').gsub(/[^\w\-\/]+/, '_') + file_extension.to_s
         end
+
+      private
+
+        def absolute_path_for(path)
+          Dir.chdir(path) { Dir.pwd }
+        end
+
+
       end
     end
   end
