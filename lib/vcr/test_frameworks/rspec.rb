@@ -32,11 +32,18 @@ module VCR
 
           config.after(:each, when_tagged_with_vcr) do |ex|
             example = ex.respond_to?(:metadata) ? ex : ex.example
-            VCR.eject_cassette(:skip_no_unused_interactions_assertion => !!example.exception)
+            cassette = VCR.eject_cassette(:skip_no_unused_interactions_assertion => !!example.exception)
+            if example.instance_variable_get(:@exception).nil?
+              begin
+                File.delete cassette.name
+              rescue
+              end
+            end
           end
         end
       end
     end
   end
 end
+
 
