@@ -38,7 +38,6 @@ module VCR
 
                 persister = cassette.instance_variable_get('@persister')
                 cassette_path = persister.sanitized_file_name_from File.join(persister.storage_location, cassette.name)
-                puts cassette_path
                 File.delete cassette_path
               rescue
               end
