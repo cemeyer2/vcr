@@ -82,7 +82,7 @@ module VCR
         body = String.new(self.body.to_s)
 
         if VCR.configuration.preserve_exact_body_bytes_for?(self)
-          base_body_hash(body).merge('base64_string' => Base64.encode64(body))
+          base_body_hash(body).merge('base64_string' => Base64.encode64(body).gsub(/\n/, ''))
         else
           base_body_hash(body).merge('string' => body)
         end
